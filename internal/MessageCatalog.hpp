@@ -39,23 +39,24 @@ namespace internal
 class MessageCatalog
 {
 private:
-	MessageCatalog(const MessageCatalog&);
-	MessageCatalog& operator=(const MessageCatalog&);
+	MessageCatalog(const MessageCatalog &);
+
+	MessageCatalog &operator=(const MessageCatalog &);
 
 	uint32_t numberOfStrings;
-	const std::string* sortedOrigStringsArray;
-	const std::string* translatedStringsArray;
+	const std::string *sortedOrigStringsArray;
+	const std::string *translatedStringsArray;
 
 public:
 	// The ownership of these arrays is transfered to the created message
 	// catalog object!
 	// Does not throw exceptions!
 	MessageCatalog(uint32_t numberOfStrings,
-			const std::string* sortedOrigStringsArray,
-			const std::string* translatedStringsArray) :
-					numberOfStrings(numberOfStrings),
-					sortedOrigStringsArray(sortedOrigStringsArray),
-					translatedStringsArray(translatedStringsArray)
+				   const std::string *sortedOrigStringsArray,
+				   const std::string *translatedStringsArray) :
+			numberOfStrings(numberOfStrings),
+			sortedOrigStringsArray(sortedOrigStringsArray),
+			translatedStringsArray(translatedStringsArray)
 	{
 	}
 
@@ -67,22 +68,18 @@ public:
 
 	// Returns NULL, if the original string was not found.
 	// Does not throw exceptions!
-	const std::string* getTranslatedStrPtr(const std::string& orig) const
+	const std::string *getTranslatedStrPtr(const std::string &orig) const
 	{
-		const std::string* lastSortedOrigStringEndIter
+		const std::string *lastSortedOrigStringEndIter
 				= this->sortedOrigStringsArray + this->numberOfStrings;
-		const std::string* origStrPtr = std::lower_bound(this->sortedOrigStringsArray,
-				lastSortedOrigStringEndIter,
-				orig);
+		const std::string *origStrPtr = std::lower_bound(this->sortedOrigStringsArray,
+														 lastSortedOrigStringEndIter,
+														 orig);
 
-		if (!origStrPtr || (origStrPtr == lastSortedOrigStringEndIter) || (*origStrPtr != orig) )
-		{
+		if (!origStrPtr || (origStrPtr == lastSortedOrigStringEndIter) || (*origStrPtr != orig))
 			return NULL;
-		}
 		else
-		{
 			return &this->translatedStringsArray[origStrPtr - this->sortedOrigStringsArray];
-		}
 	}
 };
 
