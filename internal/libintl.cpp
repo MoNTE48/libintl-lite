@@ -152,7 +152,7 @@ libintl_lite_bool_t bindtextdomain(const char *domain, const char *dirname)
 	char moFilePath[1024];
 	char *lang;
 
-	lang = getenv("LANGUAGE");
+	lang = getenv("LANG");
 	if (lang == nullptr)
 		return LIBINTL_LITE_BOOL_FALSE;
 
